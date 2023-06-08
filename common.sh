@@ -92,6 +92,7 @@ status_check $?
 }
 
 nodejs() {
+
   print_head "Configure NodeJS Repo"
   curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
   status_check $?
