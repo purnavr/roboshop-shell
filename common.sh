@@ -1,6 +1,6 @@
 code_dir=$(pwd)
 log_file=/tmp/roboshop.log
-rm -f $(log_file)
+rm -f ${log_file}
 
 print_head() {
   echo -e "\e[31m$1\e[0m"
@@ -10,14 +10,14 @@ status_check() {
   if [ $1 -eq 0 ]; then
     echo SUCCESS
   else FAILURE
-  ECHO "Read the log file ${log_file} for more information about error"
+  echo "Read the log file ${log_file} for more information about error"
   exit 1
 }
 
 
 systemd_setup() {
 print_head "Copy SystemD Servicefile"
-cp ${code_dir}/configs/catalogue.service /etc/systemd/system/catalogue.service &>>${log_file}
+cp ${code_dir}/configs/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
 status_check $?
 
 print_head "Reload systemD"
