@@ -109,6 +109,7 @@ nodejs() {
   systemd_setup
 
   schema_setup
+
 }
 
 java() {
