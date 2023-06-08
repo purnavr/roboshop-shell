@@ -48,7 +48,7 @@ if [ ${schema_tpye} == "mongo" ]; then
   status_check $?
 
   print_head "Load Scheme"
-  mongo --host MONGODB-SERVER-IPADDRESS </app/schema/${component} &>>${log_file}
+  mongo --host GIVE IP HERE </app/schema/${component} &>>${log_file}
   status_check $?
 elif [ ${schema_tpye} == "mysql" ]; then
        print_head "Install mysql client"
@@ -82,7 +82,7 @@ rm -rf /app/* &>>${log_file}
 status_check $?
 
 print_head "Downloaded Catalogue"
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/${component} &>>${log_file}
+curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component} &>>${log_file}
 status_check $?
 cd /app
 
@@ -92,25 +92,23 @@ status_check $?
 }
 
 nodejs() {
-print_head "Configure Nodejs Repo"
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
-status_check $?
+  print_head "Configure Nodejs Repo"
+  curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
+  status_check $?
 
-print_head "Installing nodejs"
-yum install nodejs -y &>>${log_file}
-status_check $?
+  print_head "Installing nodejs"
+  yum install nodejs -y &>>${log_file}
+  status_check $?
 
-app_prereq_setup
+  app_prereq_setup
 
-print_head "Install nodejs dependencies"
-npm install &>>${log_file}
-status_check $?
+  print_head "Install nodejs dependencies"
+  npm install &>>${log_file}
+  status_check $?
 
-systemd_setup
+  systemd_setup
 
-schema_setup
-
-
+  schema_setup
 }
 
 java() {
