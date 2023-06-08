@@ -93,26 +93,24 @@ status_check $?
 
 nodejs() {
   print_head "Configure NodeJS Repo"
-    curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
-    status_check $?
+  curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
+  status_check $?
 
-    print_head "Install NodeJS"
-    yum install nodejs -y &>>${log_file}
-    status_check $?
+  print_head "Install NodeJS"
+  yum install nodejs -y &>>${log_file}
+  status_check $?
 
-    app_prereq_setup
+  app_prereq_setup
 
-    print_head "Installing NodeJS Dependencies"
-    npm install &>>${log_file}
-    status_check $?
+  print_head "Installing NodeJS Dependencies"
+  npm install &>>${log_file}
+  status_check $?
 
-    schema_setup
+  schema_setup
 
-    systemd_setup
+  systemd_setup
 
-  }
-
-
+}
 
 java() {
 
