@@ -81,13 +81,13 @@ print_head "Delete Old Content"
 rm -rf /app/* &>>${log_file}
 status_check $?
 
-print_head "Downloaded Catalogue"
+print_head "Downloading App Content"
 curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component} &>>${log_file}
 status_check $?
 cd /app
 
-print_head "Unzip catalogue"
-unzip /tmp/${component} &>>${log_file}
+print_head "Extracting App content"
+unzip /tmp/${component}.zip &>>${log_file}
 status_check $?
 }
 
