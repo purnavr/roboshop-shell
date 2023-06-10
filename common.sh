@@ -26,12 +26,12 @@ print_head "Reload systemD"
 systemctl daemon-reload &>>${log_file}
 status_check $?
 
-print_head "enable Catalogue"
+print_head "Enable ${component} Service "
 systemctl enable ${component} &>>${log_file}
 status_check $?
 
-print_head "Start Catalogue"
-systemctl start ${component} &>>${log_file}
+print_head "Start ${component} Service"
+systemctl restart ${component} &>>${log_file}
 status_check $?
 
 }
@@ -157,16 +157,16 @@ python() {
 
 golang() {
   print_head "Install Golang"
-  yum install golang -y
+  yum install golang -y &>>${log_file}
   status_check $?
 
   app_prereq_setup
 
    print_head "Download Dependencies & build the software"
    cd /app
-   go mod init dispatch
-   go get
-   go build
+   go mod init dispatch &>>${log_file}
+   go get &>>${log_file}
+   go build &>>${log_file}
    status_check $?
 
    # SystemD Function
