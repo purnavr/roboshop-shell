@@ -39,7 +39,7 @@ systemd_setup() {
 schema_setup() {
   if [ "${schema_type}" == "mongo" ]; then
     print_head "Copy MongoDB Repo File"
-    cp ${code_dir}/configs/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${log_file}
+    cp /root/roboshop-shell/configs/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${log_file}
     status_check $?
 
     print_head "Install Mongo Client"
@@ -47,7 +47,7 @@ schema_setup() {
     status_check $?
 
     print_head "Load Schema"
-    mongo --host mongodb-dev.devopsb71.online </app/schema/${component}.js &>>${log_file}
+    mongo --host mongodb-dev.roboz.online </app/schema/${component}.js &>>${log_file}
     status_check $?
   elif [ "${schema_type}" == "mysql" ]; then
     print_head "Install MySQL Client"
@@ -63,7 +63,8 @@ schema_setup() {
 app_prereq_setup() {
   print_head "Create Roboshop User"
   id roboshop  &>>${log_file}
-  if [ $? -ne 0 ]; then
+  if [ $? -ne 0 ]
+  then
     useradd roboshop &>>${log_file}
   fi
   status_check $?
