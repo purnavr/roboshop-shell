@@ -3,7 +3,7 @@ log_file=/tmp/roboshop.log
 rm -f ${log_file}
 
 print_head() {
-  echo -e "\e[31m$1\e[0m"
+  echo -e "\e[36m$1\e[0m"
 }
 
 status_check() {
@@ -39,7 +39,7 @@ systemd_setup() {
 schema_setup() {
   if [ "${schema_type}" == "mongo" ]; then
     print_head "Copy MongoDB Repo File"
-    cp /root/roboshop-shell/configs/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${log_file}
+    cp ${code_dir}/configs/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${log_file}
     status_check $?
 
     print_head "Install Mongo Client"
@@ -47,7 +47,7 @@ schema_setup() {
     status_check $?
 
     print_head "Load Schema"
-    mongo --host 172.31.29.6 </app/schema/${component}.js &>>${log_file}
+    mongo --host mongodb-dev.roboz.online </app/schema/${component}.js &>>${log_file}
     status_check $?
   elif [ "${schema_type}" == "mysql" ]; then
     print_head "Install MySQL Client"
@@ -55,7 +55,7 @@ schema_setup() {
     status_check $?
 
     print_head "Load Schema"
-    mysql -h mysql-dev.devopsb71.online -uroot -p${mysql_root_password} < /app/schema/shipping.sql &>>${log_file}
+    mysql -h mysql-dev.roboz.online -uroot -p${mysql_root_password} < /app/schema/shipping.sql &>>${log_file}
     status_check $?
   fi
 }
@@ -63,8 +63,7 @@ schema_setup() {
 app_prereq_setup() {
   print_head "Create Roboshop User"
   id roboshop  &>>${log_file}
-  if [ $? -ne 0 ]
-  then
+  if [ $? -ne 0 ]; then
     useradd roboshop &>>${log_file}
   fi
   status_check $?
