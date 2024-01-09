@@ -7,13 +7,14 @@ SG_NAME="allow-all"
 #############################
 
 
+
 create_ec2() {
   echo -e '#!/bin/bash' >/tmp/user-data
   echo -e "\nset-hostname ${COMPONENT}" >>/tmp/user-data
   PRIVATE_IP=$(aws ec2 run-instances \
       --image-id ${AMI_ID} \
       --instance-type t2.micro \
-      --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${COMPONENT}}, {Key=Monitor,Value=yes}]" \
+      --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${COMPONENT}}, {Key=Monitor,Value=yes}]" "ResourceType=spot-instances-request,Tags=[{Key=Name,Value=${COMPONENT}}]"  \
       --security-group-ids ${SGID} \
       --user-data file:///tmp/user-data \
       | jq '.Instances[].PrivateIpAddress' | sed -e 's/"//g')
