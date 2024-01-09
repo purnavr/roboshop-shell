@@ -7,7 +7,7 @@ if [ -z "${mysql_root_password}" ]; then
 fi
 
 print_head "Disabling MySQL 8 Version"
-dnf module disable mysql -y  &>>${log_file}
+yum module disable mysql -y  &>>${log_file}
 status_check $?
 
 print_head "Copy MySQL repo file"
