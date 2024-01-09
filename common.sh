@@ -110,7 +110,6 @@ nodejs() {
 }
 
 java() {
-
   print_head "Install Maven"
   yum install maven -y &>>${log_file}
   status_check $?
@@ -123,10 +122,10 @@ java() {
   status_check $?
 
   # Schema Setup Function
-  schema_setup
+  systemd_setup
 
   # SystemD Function
-  systemd_setup
+  schema_setup
 }
 
 python() {
